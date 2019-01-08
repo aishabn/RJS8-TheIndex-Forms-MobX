@@ -1,6 +1,8 @@
 import { decorate, observable, computed } from "mobx";
 import axios from "axios";
 
+import authorStore from "./AuthorStore";
+
 const instance = axios.create({
   baseURL: "https://the-index-api.herokuapp.com"
 });
@@ -14,13 +16,25 @@ class BookStore {
 
   fetchBooks() {
     return instance
-      .get("https://the-index-api.herokuapp.com/api/books/")
+      .get("/api/books/")
       .then(res => res.data)
       .then(books => {
         this.books = books;
         this.loading = false;
       })
       .catch(err => console.error(err));
+  }
+
+  addBook(newBook, authorID) {
+    let book = { ...newBook, authors: [authorID] };
+    return instance
+      .post("/api/books/", book)
+      .then(res => res.data)
+      .then(aBook => {
+        this.books.push(aBook);
+        console.log(this.books);
+      })
+      .catch(err => console.error(err.response.data));
   }
 
   get filteredBooks() {

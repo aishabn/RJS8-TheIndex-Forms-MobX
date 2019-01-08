@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Modal from "react-responsive-modal";
 
 import AuthorForm from "./forms/AuthorForm";
+import { observer } from "mobx-react";
 
 class AddAuthorCard extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class AddAuthorCard extends Component {
   onCloseModal() {
     this.setState({ open: false });
   }
-  
+
   render() {
     const { open } = this.state;
     return (
@@ -49,4 +50,4 @@ class AddAuthorCard extends Component {
   }
 }
 
-export default AddAuthorCard;
+export default observer(AddAuthorCard);

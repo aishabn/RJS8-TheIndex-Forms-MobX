@@ -23,6 +23,16 @@ class AuthorStore {
       .catch(err => console.error(err));
   }
 
+  addAuthor(author) {
+    return instance
+      .post("/api/authors/", author)
+      .then(res => res.data)
+      .then(authors => {
+        this.authors.push(authors);
+      })
+      .catch(err => console.error(err));
+  }
+
   get filteredAuthors() {
     return this.authors.filter(author =>
       `${author.first_name} ${author.last_name}`
